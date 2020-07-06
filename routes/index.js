@@ -22,6 +22,7 @@ router.get('/', function(req, res, next) {
  */
 router.post('/register', (req, res, next) => {
   // post请求的参数在body里，get在query/params里
+  console.log(req.body)
   const {username, password} = req.body
 
   // postman中，x-www-form-urlencoded表示模拟表单提交
