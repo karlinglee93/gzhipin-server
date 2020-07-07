@@ -14,6 +14,7 @@
  * 	3.3. 通过 Model 的 findByIdAndUpdate()更新某个数据 
  * 	3.4. 通过 Model 的 remove()删除匹配的数据
  */
+const md5 = require('blueimp-md5') // md5加密函数
 /* 1. 连接数据库 */
 // 1.1. 引入 mongoose
 const mongoose = require('mongoose')
@@ -37,3 +38,22 @@ const userSchema = mongoose.Schema({
 //	2.2. 定义 Model(与集合对应, 可以操作集合)
 // 其值为构造函数
 const UserModel = mongoose.model('user', userSchema)
+
+/* 3. 通过 Model 或其实例对集合数据进行 CRUD 操作 */
+// 3.1. 通过 Model 实例的 save()添加数据
+const testSave = () => {
+	// 创建UserModel的实例
+	const userModel = new UserModel({username: 'xiaoming', password: md5('123'), type: 'dashen'})
+	// 调用save()保存到DB
+	userModel.save((err, user) => {
+		if (err) {
+			console.log('存入数据库失败! Error: ', err)
+		} else {
+			console.log('存入数据库成功! User: ', user)
+		}
+	})
+}
+testSave()
+// 3.2. 通过 Model 的 find()/findOne()查询多个或一个数据 
+// 3.3. 通过 Model 的 findByIdAndUpdate()更新某个数据 
+// 3.4. 通过 Model 的 remove()删除匹配的数据
