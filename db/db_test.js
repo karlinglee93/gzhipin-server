@@ -43,7 +43,7 @@ const UserModel = mongoose.model('user', userSchema)
 // 3.1. 通过 Model 实例的 save()添加数据
 const testSave = () => {
 	// 创建UserModel的实例
-	const userModel = new UserModel({username: 'xiaoming', password: md5('123'), type: 'dashen'})
+	const userModel = new UserModel({username: 'Cook', password: md5('321'), type: 'laoban'})
 	// 调用save()保存到DB
 	userModel.save((err, user) => {
 		if (err) {
@@ -53,7 +53,18 @@ const testSave = () => {
 		}
 	})
 }
-testSave()
+// testSave()
 // 3.2. 通过 Model 的 find()/findOne()查询多个或一个数据 
+const testFind = () => {
+	// 查询多个: 得到的是数组，如果没有匹配则为[]
+	UserModel.find((err, users) => {
+		console.log('find(): ', err, users)
+	})
+	// 查询一个: 得到的是对象，如果没有匹配则为null
+	UserModel.findOne({_id: '5f0437adaf15fffdbd0acffd'} ,(err, users) => {
+		console.log('findOne(): ', err, users)
+	})
+}
+testFind()
 // 3.3. 通过 Model 的 findByIdAndUpdate()更新某个数据 
 // 3.4. 通过 Model 的 remove()删除匹配的数据
