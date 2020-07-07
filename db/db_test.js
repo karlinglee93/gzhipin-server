@@ -65,6 +65,13 @@ const testFind = () => {
 		console.log('findOne(): ', err, users)
 	})
 }
-testFind()
+// testFind()
 // 3.3. 通过 Model 的 findByIdAndUpdate()更新某个数据 
+const testUpdate = () => {
+	UserModel.findByIdAndUpdate({_id: '5f0437adaf15fffdbd0acffd'}, {username: 'Steve'}, 
+	(err, previousUser) => {
+		console.log('findByIdAndUpdate(): ', err, previousUser)
+	})
+}
+testUpdate()
 // 3.4. 通过 Model 的 remove()删除匹配的数据
