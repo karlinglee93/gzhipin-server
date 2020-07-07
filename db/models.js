@@ -14,7 +14,7 @@
 // 1.1. 引入 mongoose
 const mongoose = require('mongoose')
 // 1.2. 连接指定数据库(URL 只有数据库是变化的) 
-mongoose.connect('mongodb://localhost:27017/gzhipin')
+mongoose.connect('mongodb://localhost:27017/gzhipin', {useNewUrlParser: true, useUnifiedTopology: true})
 // 1.3. 获取连接对象
 const conn = mongoose.connection
 // 1.4. 绑定连接完成的监听(用来提示连接成功)
@@ -36,5 +36,5 @@ const userSchema = mongoose.Schema({
 const UserModel = mongoose.model('user', userSchema)
 // 2.3. 向外暴露 Model
 // module.exports = xxx (一次性暴露)
-// export xxx/yyy = value (多次暴露)
-export.UserModel = UserModel
+// exports xxx/yyy = value (多次暴露)
+exports.UserModel = UserModel
