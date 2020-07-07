@@ -73,5 +73,12 @@ const testUpdate = () => {
 		console.log('findByIdAndUpdate(): ', err, previousUser)
 	})
 }
-testUpdate()
-// 3.4. 通过 Model 的 remove()删除匹配的数据
+// testUpdate()
+// 3.4. 通过 Model 的 deleteOne()删除匹配的数据
+const testDelete = () => {
+	UserModel.deleteOne({_id: '5f0437adaf15fffdbd0acffd'}, (err, data) => {
+		// { n: 数量, ok: 1/0操作成功/失败, deletedCount: 1 }
+		console.log('deleteOne(): ', err, data)
+	})
+}
+testDelete()
