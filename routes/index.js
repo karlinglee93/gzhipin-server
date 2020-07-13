@@ -60,4 +60,25 @@ router.post('/login', (req, res) => {
   })
 })
 
+router.post('/update', (req, res) => {
+  // 从请求的cookie中得到user_id
+  const user_id = req.cookies.user_id
+  // cookie 不存在/被清除
+  if (!user_id) {
+    return res.send({code: 1, msg: '请重新登陆'})
+  }
+
+  const user = req.body
+  UserModel.findByIdAndUpdate(user_id, user, (err, previousUser) => {
+    if (!previousUser) {
+      // 通知浏览器删除user_id cookie
+      res.clearCookie('user_id')
+      res.send({code: 1, msg: '请重新登陆'})
+    } else {
+      const {_id, username, type} = previousUser
+      res.send({code: 0, data: {_id, username, type, ...user}})
+    }
+  })
+})
+
 module.exports = router;
