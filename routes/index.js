@@ -81,4 +81,20 @@ router.post('/update', (req, res) => {
   })
 })
 
+// 获取用户信息的路由(通过cookie中的user_id)
+router.get('/user', (req, res) => {
+  const {user_id} = req.cookies
+  if (!user_id) {
+    return res.send({code: 1, msg: '请重新登陆'})
+  }
+  UserModel.findById(user_id, filter, (err, user) => {
+    if (!user) {
+      res.clearCookie('user_id')
+      res.send({code: 1, msg: '请重新登陆'})
+    } else {
+      res.send({code: 0, data: user})
+    }
+  })
+})
+
 module.exports = router;
