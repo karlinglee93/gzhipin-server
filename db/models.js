@@ -33,9 +33,19 @@ const userSchema = mongoose.Schema({
 	company: {type: String}, // 公司名称
 	salary: {type: String} // 工资
 })
+const chatShema = mongoose.Schema({
+	chat_id: {type: String, required: true},
+	from: {type: String, required: true},
+	to: {type: String, required: true},
+	content: {type: String, required: true},
+	read: {type: Boolean, default: false, required: true},
+	create_time: {type: Number, required: true}
+})
 // 2.2. 定义 Model(与集合对应, 可以操作集合) 
 const UserModel = mongoose.model('user', userSchema)
+const ChatModel = mongoose.model('chat', chatShema)
 // 2.3. 向外暴露 Model
 // module.exports = xxx (一次性暴露)
 // exports.xxx = value (多次暴露)
 exports.UserModel = UserModel
+exports.ChatModel = ChatModel
