@@ -113,7 +113,7 @@ router.get('/msglist', (req, res) => {
       userDocs.forEach(doc => {
         users[doc._id] = {username: doc.username, header: doc.header}
       })
-      ChatModel.find({'$or': [{from: user_id}, {to: user_id}]}, (err, chatMsgs) => {
+      ChatModel.find({'$or': [{from: user_id}, {to: user_id}]}, (err, chatMsgs) => { // $or 过滤条件
         if (!err) {
           res.send({code: 0, data: {users, chatMsgs}})
         } else {
@@ -127,10 +127,12 @@ router.get('/msglist', (req, res) => {
 })
 
 router.post('readmsg', (req, res) => {
-  const {chat_id} = req.body
-  ChatModel.update({chat_id}, {read: true}, {multi: true}, (err, chatMsgs) => {
+  const {from} = req.body
+  const to = req.cookies.user_id
+  ChatModel.update({from, to, read: false}, {read: true}, {multi: true}, (err, doc) => { // 设置后可使update修改多条
     if (!err) {
-      res.send({code: 0, data: {users, chatMsgs}})
+      console.log('/readmsg', doc)
+      res.send({code: 0, data: doc.nModified}) // 更新的数量
     }
   })
 })
