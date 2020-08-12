@@ -126,7 +126,7 @@ router.get('/msglist', (req, res) => {
   })
 })
 
-router.post('readmsg', (req, res) => {
+router.post('/readmsg', (req, res) => {
   const {from} = req.body
   const to = req.cookies.user_id
   ChatModel.update({from, to, read: false}, {read: true}, {multi: true}, (err, doc) => { // 设置后可使update修改多条
